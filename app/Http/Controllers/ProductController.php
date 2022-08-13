@@ -14,4 +14,13 @@ class ProductController extends Controller
         //dd($products);
         return view('products.index')->with('products',$products);
     }
+
+    public function show($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        return view('products.show')->with('product', $product);
+    }
+
+
 }

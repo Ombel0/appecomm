@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,4 +20,5 @@ Route::get('/', function () {
 
 
 
-Route::get('/boutique', [App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/boutique', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+Route::get('/boutique /{slug}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');

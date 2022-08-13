@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
        <!-- <link rel="stylesheet" href="style.css" />-->
 
+<base href="/img" >     <!--Base URL image -->
+
 
         <style>
         *
@@ -332,7 +334,7 @@
  <div class="container">
         <div class="navbar">
           <div class="logo">
-             <div class="bel"><h1>BELSHOOOP</h1></div>
+           <a href="{{ route('products.index') }}"> <div class="bel">   <h1>BELSHOOOP</h1></div> </a>
           </div>
       <nav>
         <ul>
@@ -380,14 +382,12 @@
       <h2 class="title">Featured Products</h2>
        <div class="row">
 
-          @foreach ( $products as $product )
-           <div class="col-4">
 
+           <div class="col-4">
             <img src="img/Product-9.jpg">
 
-            <div class="text" > {{ $product->created_at->format('d/m/Y') }} </div>
               <h4>{{ $product->title }}</h4>
-              <p class="mb-auto text-muted">{{ $product->subtitle }}</p>
+              <p class="mb-auto text-muted">{{ $product->description }}</p>
               <div class="rating">
                  <i class="fa fa-star"></i>
                  <i class="fa fa-star"></i>
@@ -395,10 +395,10 @@
                  <i class="fa fa-star"></i>
                  <i class="fa fa-star-o"></i>
               </div>
-              <a href="{{ route('products.show', $product->slug) }} " class="stretched-link btn btn-info">Show</a>
+              <a href="" class="stretched-link btn btn-info">Add cart</a>
               <p>{{ $product->getPrice()}}</p>
              </div>
-           @endforeach
+
      </div>
 
 
@@ -408,15 +408,13 @@
 
         <h2 class="title">latest Products</h2>
         <div class="row">
-            @foreach ($products as $product )
+
 
             <div class="col-4">
-
                 <img src="img/Product-11.jpg">
 
-                  <div class="text" > {{ $product->created_at }} </div>
                   <h4>{{ $product->title }}</h4>
-                  <p class="mb-auto text-muted">{{ $product->subtitle }}</p>
+                  <p class="mb-auto text-muted">{{ $product->description }}</p>
                   <div class="rating">
                      <i class="fa fa-star"></i>
                      <i class="fa fa-star"></i>
@@ -424,11 +422,11 @@
                      <i class="fa fa-star"></i>
                      <i class="fa fa-star-o"></i>
                   </div>
-                  <a href="{{ route('products.show', $product->slug ) }}" class="stretched-link btn btn-info">Show</a>
+                  <a href="" class="stretched-link btn btn-info">Add cart</a>
                    <p>{{ $product->getPrice() }}</p>
                 </div>
 
-            @endforeach
+
 
        </div>
  </div>
@@ -496,27 +494,7 @@
      </div>
    </div>
      <!--------brands----->
-     <div class="brands">
-     <div class="small-container">
-        <div class="row">
-        <div class="col-5">
-            <img src="img/logo-godrej.png">
-        </div>
-        <div class="col-5">
-            <img src="img/logo-coca-cola.png">
-        </div>
-        <div class="col-5">
-            <img src="img/logo-oppo.png">
-        </div>
-        <div class="col-5">
-            <img src="img/logo-paypal.png">
-        </div>
-        <div class="col-5">
-            <img src="img/logo-philips.png">
-        </div>
-        </div>
-     </div>
-     </div>
+
      <!--------footer----->
      <div class="footer">
          <div class="container">
