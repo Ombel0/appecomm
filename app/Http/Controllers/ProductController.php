@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
-        return view('products.show')->with('product', $product);
+        return view('products.show')->with('product', $product);   
     }
 
 
