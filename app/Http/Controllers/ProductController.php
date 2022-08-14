@@ -10,6 +10,8 @@ class ProductController extends Controller
     public function index()
     {
 
+
+
         $products = Product::inRandomOrder()->take(6)->get();
         //dd($products);
         return view('products.index')->with('products',$products);
@@ -19,7 +21,7 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
-        return view('products.show')->with('product', $product);   
+        return view('products.show')->with('product', $product);
     }
 
 

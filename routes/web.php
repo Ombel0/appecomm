@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +24,12 @@ Route::get('/', function () {
 
 Route::get('/boutique', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
 Route::get('/boutique /{slug}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+
+
+
+
+Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('carts.store');
+
+Route::get('/emptycart', function () {
+  Cart::destroy();
+});

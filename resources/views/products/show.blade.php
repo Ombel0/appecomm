@@ -17,8 +17,11 @@
          <i class="fa fa-star-o"></i>
       </div>
 <!--------add to carts ----->
-       <form action=""  method="POST">
+       <form action="{{ route('carts.store') }}"  method="POST">
        @csrf
+
+       <input type="hidden" name="product_id" value="{{ $product->id }}">
+
           <button type="submit" class="btn btn-dark"> Add to cart </button>
       </form>
 <!--------add to carts ----->
@@ -52,9 +55,11 @@
           </div>
 <!--------add to carts ----->
 
-        <form action="" method="POST">
+        <form action="{{ route('carts.store') }}" method="POST">
           @csrf
-          
+          <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+
           <button type="submit" class="btn btn-dark"> Add to cart </button>
 
       </form>

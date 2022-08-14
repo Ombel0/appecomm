@@ -343,7 +343,9 @@
           <li><a href="">Account</a></li>
         </ul>
     </nav>
-    <img src="img/cart.png" width="30px" height="30px">
+    <a href=""><img src="img/cart.png" width="30px" height="30px">Cart<span class="badge badge-pill badge-dark">[{{ Cart::count() }}]</span></a>
+
+
    </div>
    <div class="row">
     <div class="col-2">
@@ -387,7 +389,7 @@
 
 
         @yield('content')
-        
+
 
        <!-- index.blade.php -->
 
@@ -397,6 +399,17 @@
        </div>
  </div>
  <!--------offers----->
+
+
+@if (session('success'))
+
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+
+
+@endif
+
 
  <div class="offer">
      <div class="small-container">
