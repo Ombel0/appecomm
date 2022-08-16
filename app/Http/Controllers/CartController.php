@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades;
 use Gloudemans\Shoppingcart\Facades\Cart;
+
+
+
+
+
 
 class CartController extends Controller
 {
@@ -14,8 +18,11 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        //
+
+
+        return view('carts.index');
     }
 
     /**
@@ -34,25 +41,24 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
-        //dd($request->id,$request->title,$request->price);
-
-
         $duplicata = Cart::search(function ($cartItem, $rowId) use ($request) {
-            return $cartItem->id === $request->product_id ;
+            return $cartItem->id == $request->product_id;
         });
 
-        if($duplicata->isNotEmpty()){
-            return redirect()->route('products.index')->with('succes','product add successfully');
+        if ($duplicata->isNotEmpty()) {
+            return redirect()->route('products.index')->with('successfully', 'The product has already been added.');
         }
+
         $product = Product::find($request->product_id);
 
-        Cart::add( $product->id , $product->title , 1 , $product->price )->associate('App/Models/Product');
+        Cart::add($product->id, $product->title, 1, $product->price)
+            ->associate('App\Models\Product');
 
-        return redirect()->route('products.index')->with('succes','product add successfully');
+        return redirect()->route('products.index')->with('successfully', 'The product has been added.');
     }
+
 
     /**
      * Display the specified resource.
@@ -94,8 +100,10 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($rowId)
     {
-        //
+        Cart::remove($rowId);
+
+        return back()->with('success', 'product is deleted  .');
     }
 }
