@@ -26,7 +26,7 @@ Route::get('/boutique', [App\Http\Controllers\ProductController::class, 'index']
 Route::get('/boutique /{slug}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 
 /*  display cart  */
-
+Route::get('/payment', [App\Http\Controllers\checkoutController::class, 'index'])->name('checkout.index');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('carts.index');
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('carts.store');
 Route::delete('/panier/{rowId}', [App\Http\Controllers\CartController::class, 'destroy'])->name('carts.destroy');
