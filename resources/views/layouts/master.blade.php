@@ -327,13 +327,17 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <title>BELSTORE /Ecommerce</title>
+
+        @yield('extra-script')
+
+
     </head>
 <body>
     <div class="header">
  <div class="container">
         <div class="navbar">
           <div class="logo">
-             <div class="bel"><h1>BELSHOOOP</h1></div>
+           <a href="{{ route('products.index') }}">  <div class="bel"><h1>BELSHOOOP</h1></div></a>
           </div>
       <nav>
         <ul>
@@ -382,7 +386,7 @@
 
 <!--featured products-->
  <div class="small-container">
-    
+
        <div class="row">
 
 
@@ -536,5 +540,6 @@
        <p class="copyright">&copy2021; OMAR BELGHALI . wwww.omarbelghali.com</p>
 
      </div>
+     @yield('extra-js')
 </body>
 </html>
