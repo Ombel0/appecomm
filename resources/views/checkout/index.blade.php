@@ -3,7 +3,10 @@
 {{-- scripte js stripe --}}
 
 @section('extra-script')
+
+
 <script src="https://js.stripe.com/v3/"></script>
+
 @endsection
 
 
@@ -15,16 +18,19 @@
     <div class="row">
 
         <div class="col-md-6">
-           <form action=""  class="my-4" >
-
-            <div id="card-element">
-                <!-- Elements will create input elements here -->
+           <form action=""  class="my-4" method="post" id="payment-form" >
+            <div class="form-row">
+                <label for="card-element">
+                  Credit or debit card
+                </label>
+                <div id="card-element">
+                  <!-- A Stripe Element will be inserted here. -->
                 </div>
 
-
-
-                <!-- We'll put the error messages in this element -->
+                <!-- Used to display Element errors. -->
                 <div id="card-errors" role="alert"></div>
+              </div>
+
                 <button class="btn btn-success btn-block mt-4" id="submit"> proceed to payment </button>
            </form>
         </div>
@@ -34,47 +40,56 @@
 
 @section('extra-js')
 <script>
-  var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-  var elements = stripe.elements();
 
-  var style = {
-          base: {
-          color: "#32325d",
-         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-         fontSmoothing: "antialiased",
-         fontSize: "16px",
-            "::placeholder": {
-                color: "#aab7c4"
-            }
-        },
-        invalid: {
-            color: "#fa755a",
-            iconColor: "#fa755a"
-        }
-    };
-       var card = elements.create("card", { style: style });
-       card.mount("#card-element");
+var stripe = Stripe('pk_test_51LXpi7DBv1BdzorIHTciQEwi9nbkAZ16ozMPbc8AsW7cqb4XNndVoxLbSfLInw0KkPFsThk7o84Cht9e2A3aVeCB00IJMy7u73');
+var elements = stripe.elements();
+
+ // Custom styling can be passed to options when creating an Element.
+var style = {
+  base: {
+    // Add your base input styles here. For example:
+    fontSize: '16px',
+    color: '#32325d',
+  },
+};
+
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
 
 
-       card.addEventListener('change', ({error}) => {
-    const displayError = document.getElementById('card-errors');
-        if (error) {
-            displayError.textContent = error.message;
-        } else {
-
-            displayError.textContent = '';
-        }
-    });
 
 
-    
+
+// Create a token or display an error when the form is submitted.
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the customer that there was an error.
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server.
+
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+
+// SUBMIT 
 
     var submitButton = document.getElementById('submit');
 
     submitButton.addEventListener('click', function(ev) {
         ev.preventDefault();
 
-    stripe.confirmCardPayment("{{ $clientSecret }}", {
+    stripe.confirmCardPayment("{{ $clientSecret }}",{    //SECRET KEY
         payment_method: {
             card: card
         }
