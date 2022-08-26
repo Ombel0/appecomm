@@ -19,15 +19,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
 /*  display product  */
 
+Route::namespace("App\Http\Controllers")->group(function() {
+    Route::get('/boutique', 'ProductController@index')->name('products.index');
+    Route::get('/boutique /{slug}', 'ProductController@show')->name('products.show');
 
-Route::get('/boutique', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
-Route::get('/boutique /{slug}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+});
+
+
+
+//Route::get('/boutique', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+//Route::get('/boutique /{slug}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 
 /*  display cart  */
 Route::get('/payment', [App\Http\Controllers\checkoutController::class, 'index'])->name('checkout.index');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('carts.index');
+
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('carts.store');
 Route::delete('/panier/{rowId}', [App\Http\Controllers\CartController::class, 'destroy'])->name('carts.destroy');
 
@@ -36,3 +47,12 @@ Route::delete('/panier/{rowId}', [App\Http\Controllers\CartController::class, 'd
 Route::get('/emptycart', function () {      // destroy cart
   Cart::destroy();
 });
+
+Route::post('/payment', [App\Http\Controllers\checkoutController::class, 'store'])->name('checkout.store');
+
+
+
+
+Route::get('/thanks',function(){
+    return view('checkout.thankyou');
+    });

@@ -1,12 +1,20 @@
 @extends('layouts.master')
 
+
+
+
+{{-- X-CSRF-TOKEN --}}
+
+@section('extra-meta')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+
+
 {{-- scripte js stripe --}}
 
 @section('extra-script')
-
-
 <script src="https://js.stripe.com/v3/"></script>
-
 @endsection
 
 
@@ -15,10 +23,11 @@
 @section('content')
 <div class="col-md-12">
     <h1> Payment </h1>
-    <div class="row">
+
 
         <div class="col-md-6">
-           <form action=""  class="my-4" method="post" id="payment-form" >
+           <form action="{{ route('checkout.store') }}"  class="my-4" method="POST" id="payment-form" >
+            @csrf
             <div class="form-row">
                 <label for="card-element">
                   Credit or debit card
@@ -29,9 +38,9 @@
 
                 <!-- Used to display Element errors. -->
                 <div id="card-errors" role="alert"></div>
-              </div>
 
-                <button class="btn btn-success btn-block mt-4" id="submit"> proceed to payment </button>
+
+                <button class="btn btn-success btn-block mt-4" id="submit"> proceed to payment ({{ getPrice(Cart::total()) }}) </button>
            </form>
         </div>
     </div>
@@ -82,13 +91,13 @@ form.addEventListener('submit', function(event) {
 });
 
 
-// SUBMIT 
+// SUBMIT
 
     var submitButton = document.getElementById('submit');
 
     submitButton.addEventListener('click', function(ev) {
         ev.preventDefault();
-
+submitButton.disabled = true;
     stripe.confirmCardPayment("{{ $clientSecret }}",{    //SECRET KEY
         payment_method: {
             card: card
@@ -97,14 +106,39 @@ form.addEventListener('submit', function(event) {
         }).then(function(result) {
             if (result.error) {
             // Show error to your customer (e.g., insufficient funds)
-
+submitButton.disabled = false;
             console.log(result.error.message);
             } else {
                 // The payment has been processed!
                 if (result.paymentIntent.status === 'succeeded') {
+                   var paymentIntent = result.paymentIntent;
+                   var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                   var form = document.getElementById('payment-form');
+                   var url = form.action;
+                   var redirect = '/thanks';
 
 
-                  console.log(result.paymentIntent);
+                   fetch(
+                    url,
+                    {
+                        headers:{
+                            "Content-Type": "application/json",
+                                "Accept": "application/json, text-plain, */*",
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRF-TOKEN": token
+                        },
+                        method:'post',
+                        body:JSON.stringify({
+                            paymentIntent : paymentIntent
+                        })
+
+                    }
+
+                   ).then((data)=>{console.log(data)
+                    window.location.href = redirect;
+                }).catch((error)=>{
+                    console.log(error)
+                })
                 }
             }
         });
