@@ -38,7 +38,7 @@
                 <tbody>
 
                   @foreach (Cart::content() as $product )
-
+          
                   <tr>
                     <th scope="row" class="border-0">
                       <div class="p-2">

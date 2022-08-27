@@ -50,9 +50,9 @@ Route::get('/emptycart', function () {      // destroy cart
 
 Route::post('/payment', [App\Http\Controllers\checkoutController::class, 'store'])->name('checkout.store');
 
+Route::get('/thanks', [App\Http\Controllers\checkoutController::class, 'thankyou'])->name('checkout.thankyou');
 
 
-
-Route::get('/thanks',function(){
+/*Route::get('/thanks',function(){
     return view('checkout.thankyou');
-    });
+    });*/
