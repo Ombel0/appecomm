@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -50,6 +52,7 @@ class CartController extends Controller
         $duplicata = Cart::search(function ($cartItem, $rowId) use ($request) {
 
             return $cartItem->id == $request->product_id;
+
         });
 
 
@@ -58,7 +61,7 @@ class CartController extends Controller
         }
 
         $product = Product::find($request->product_id);
- 
+
         Cart::add($product->id, $product->title, 1, $product->price)
             ->associate('App\Models\Product');
 
@@ -96,9 +99,24 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $rowId)
     {
-        //
+        $data = $request->json()->all();
+
+        $validates = Validator::make($request->all(), [
+            'qty' => 'numeric|required|between:1,5',
+        ]);
+
+        if ($validates->fails()) {
+            Session::flash('error', 'La quantité doit est comprise entre 1 et 5.');
+            return response()->json(['error' => 'Cart Quantity Has Not Been Updated']);
+        }
+
+        Cart::update($rowId,$data['qty']);
+        
+
+        Session::flash('success', 'La quantité du produit est passée à ' . $data['qty'] . '.');
+        return response()->json(['success' => 'Cart Quantity Has Been Updated']);
     }
 
     /**

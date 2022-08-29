@@ -1,6 +1,10 @@
 @extends('layouts.master')
 <base href="/img" >
 
+@section('extra-meta')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('content')
 
 @if (Cart::count() > 0)
@@ -38,7 +42,7 @@
                 <tbody>
 
                   @foreach (Cart::content() as $product )
-          
+
                   <tr>
                     <th scope="row" class="border-0">
                       <div class="p-2">
@@ -50,13 +54,25 @@
                         </div>
                       </div>
                     </th>
-                    <td class="border-0 align-middle"><strong>{{ $product->model->getPrice()}}</strong></td>
-                    <td class="border-0 align-middle"><strong>3</strong></td>
+                    <!--add to quantity -->
+                      <!--rowId
+define the id of the products that are in the carts  -->
+                    <td class="border-0 align-middle"><strong>{{ getPrice($product->subtotal()) }}</strong></td>
+                    <td class="border-0 align-middle">
+                        <select class="custom-select" name="qty" id="qty" data-id="{{ $product->rowId }}">
+                            @for ($i = 1; $i <= 6; $i++)
+                                <option value="{{ $i }}" {{  $i== $product->qty  ? 'selected' : ''}} >   {{ $i }}
+
+                                </option>
+                            @endfor
+                        </select>
+                    </td>
                     <td class="border-0 align-middle">
 
            <!--form destroy-->
 
                         <form action="{{ route('carts.destroy', $product->rowId) }}" method="POST">
+
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></a>
@@ -114,6 +130,46 @@
   @else
 <div class="col-md-12">
   <p>your cart is empty</p>
+  <p>But you can visit the <strong><a href="{{ route('products.index') }}">boutique</a></strong> to do your shopping.
+  </p>
 </div>
   @endif
+@endsection
+
+@section('extra-js')
+
+<script>
+
+   var selects = document.querySelectorAll('#qty');
+ Array.from(selects).forEach((element)=> {
+element.addEventListener('change',function() {
+    var rowId = this.getAttribute('data-id');
+    var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    fetch(
+        `/panier/${rowId}`,
+                {
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    method: 'patch',
+                    body: JSON.stringify({
+                        qty: this.value
+                    })
+                }
+            ).then((data) => {
+                console.log(data);
+                location.reload();
+            }).catch((error) => {
+                console.log(error);
+            });
+        });
+    });
+
+
+</script>
+
 @endsection

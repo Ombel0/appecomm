@@ -418,6 +418,17 @@
 @endif
 
 
+
+
+@if (session('danger'))
+
+<div class="alert alert-danger">
+    {{ session('danger') }}
+</div>
+
+
+@endif
+
  <div class="offer">
      <div class="small-container">
         <div class="row">

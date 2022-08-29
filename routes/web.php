@@ -40,6 +40,9 @@ Route::get('/payment', [App\Http\Controllers\checkoutController::class, 'index']
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('carts.index');
 
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('carts.store');
+
+Route::patch('/panier/{rowId}', [App\Http\Controllers\CartController::class, 'update'])->name('carts.update');
+
 Route::delete('/panier/{rowId}', [App\Http\Controllers\CartController::class, 'destroy'])->name('carts.destroy');
 
 /*  destroy cart  */
