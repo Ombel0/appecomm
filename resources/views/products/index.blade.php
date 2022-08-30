@@ -6,7 +6,7 @@
 @foreach ( $products as $product )
 <div class="col-4">
 
- <img src="img/Product-9.jpg">
+    <img src="{{ asset('storage/'.$product->image) }}">
 
  <div class="text" > {{ $product->created_at->format('d/m/Y') }} </div>
 <!--category-->
@@ -16,8 +16,8 @@
 
 
     @foreach ($product->categories as $category)
+        {{ $category->name }}{{ $loop->last ?'': ', ' }}
 
-        {{ $category->name }}
     @endforeach
   </strong>
 
@@ -55,13 +55,13 @@
 
  <div class="col-4">
 
-     <img src="img/Product-11.jpg">
+     <img src="{{ asset('storage/'.$product->image) }}">
 
        <div class="text" > {{ $product->created_at }} </div>
 <!--category-->
        <strong class="d-inline-block mb-2">
         @foreach ($product->categories as $category)
-            {{ $category->name }}
+            {{ $category->name }}{{ $loop->last ?'': ', ' }}
         @endforeach
       </strong>
 

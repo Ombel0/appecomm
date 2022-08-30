@@ -5,10 +5,14 @@
 
 
 <div class="col-4">
-    <img src="img/Product-9.jpg">
-
+    <img src="{{ asset('storage/'.$product->image) }}">
+    <strong class="d-inline-block mb-2">
+        @foreach ($product->categories as $category)
+            {{ $category->name }}{{ $loop->last ?'': ', ' }}
+        @endforeach
+      </strong>
       <h4>{{ $product->title }}</h4>
-      <p class="mb-auto text-muted">{{ $product->description }}</p>
+      <p class="mb-auto text-muted">{!! $product->description !!}</p>
       <div class="rating">
          <i class="fa fa-star"></i>
          <i class="fa fa-star"></i>
@@ -42,10 +46,14 @@
 
 
     <div class="col-4">
-        <img src="img/Product-11.jpg">
-
+        <img src="{{ asset('storage/'.$product->image) }}">
+        <strong class="d-inline-block mb-2">
+            @foreach ($product->categories as $category)
+                {{ $category->name }}{{ $loop->last ?'': ', ' }}
+            @endforeach
+          </strong>
           <h4>{{ $product->title }}</h4>
-          <p class="mb-auto text-muted">{{ $product->description }}</p>
+          <p class="mb-auto text-muted">{!! $product->description  !!}</p>
           <div class="rating">
              <i class="fa fa-star"></i>
              <i class="fa fa-star"></i>

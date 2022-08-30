@@ -359,7 +359,9 @@
 
    </div>
 
-<span><h3>Categorys:</h3></span>
+       <div>
+         <span><h2>Categorys:</h2></span>
+     </div>
 <ul>
         @foreach (App\Models\Category::all() as $category)
      <strong>  <li> <a class="p-2 text-muted" href="{{ route('products.index', ['categorie' => $category->slug]) }}">{{ $category->name }}</a></li> </strong>

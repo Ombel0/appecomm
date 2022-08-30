@@ -59,3 +59,8 @@ Route::get('/thanks', [App\Http\Controllers\checkoutController::class, 'thankyou
 /*Route::get('/thanks',function(){
     return view('checkout.thankyou');
     });*/
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
