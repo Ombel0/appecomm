@@ -1,5 +1,6 @@
 @extends('layouts.master')
 
+
 @section('content')
 
 @foreach ( $products as $product )
@@ -8,6 +9,18 @@
  <img src="img/Product-9.jpg">
 
  <div class="text" > {{ $product->created_at->format('d/m/Y') }} </div>
+<!--category-->
+
+
+ <strong class="d-inline-block mb-2">
+
+
+    @foreach ($product->categories as $category)
+
+        {{ $category->name }}
+    @endforeach
+  </strong>
+
    <h4>{{ $product->title }}</h4>
    <p class="mb-auto text-muted">{{ $product->subtitle }}</p>
    <div class="rating">
@@ -21,7 +34,15 @@
    <p>{{ $product->getPrice()}}</p>
   </div>
 @endforeach
+
+
+<div class="d-flex justify-content-center">        <!-- search product and link -->
+    {!! $products->appends(request()->input())->links() !!}
+   </div>
+
+
 </div>
+
 
 
 <!--------latest Products----->
@@ -37,6 +58,13 @@
      <img src="img/Product-11.jpg">
 
        <div class="text" > {{ $product->created_at }} </div>
+<!--category-->
+       <strong class="d-inline-block mb-2">
+        @foreach ($product->categories as $category)
+            {{ $category->name }}
+        @endforeach
+      </strong>
+
        <h4>{{ $product->title }}</h4>
        <p class="mb-auto text-muted">{{ $product->subtitle }}</p>
        <div class="rating">
@@ -52,13 +80,18 @@
 
  @endforeach
 
+
+ <div class="d-flex justify-content-center">        <!-- search product and link -->
+    {!! $products->appends(request()->input())->links() !!}
+   </div>
+
  @if (session('success'))
 
  <div class="alert alert-success">
      {{ session('successfully') }}
  </div>
 
-
  @endif
+
 @endsection
 

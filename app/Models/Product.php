@@ -17,4 +17,10 @@ class Product extends Model
         return number_format($price, 2, ',', ' ') . ' dh';
     }
 
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category');
+    }
+
 }

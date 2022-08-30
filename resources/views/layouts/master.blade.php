@@ -21,6 +21,10 @@
         {
         font-family: 'Poppins','sans-serif;';
         }
+
+
+
+
         .navbar{
         display: flex;
         align-items: center;
@@ -354,13 +358,25 @@
 
 
    </div>
+
+<span><h3>Categorys:</h3></span>
+<ul>
+        @foreach (App\Models\Category::all() as $category)
+     <strong>  <li> <a class="p-2 text-muted" href="{{ route('products.index', ['categorie' => $category->slug]) }}">{{ $category->name }}</a></li> </strong>
+        @endforeach
+</ul>
+
+
+
+
+
    <div class="row">
     <div class="col-2">
         <h1>New Style<br>BELSHOOOP</h1>
         <p>Success isn't always what it seems.<br>Greatness you are welcome.</p><a href="" class="btn">Explore Now &#8594</a>
     </div>
     <div class="col-2">
-      <img src="img/image11.png">
+      <img src="img/shop img.png">
     </div>
 
    </div>
