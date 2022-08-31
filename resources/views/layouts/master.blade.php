@@ -133,8 +133,8 @@
         }
         .col-4
         {
-        flex-basis:25%;
-        padding:10px;
+        flex-basis:39%;
+        padding:15px;
         min-width:200px;
         margin-bottom:50px;
         transition: transform 0.5s;
@@ -345,6 +345,7 @@
           <div class="logo">
            <a href="{{ route('products.index') }}">  <div class="bel"><h1>BELSHOOOP</h1></div></a>
           </div>
+
       <nav>
         <ul>
           <li><a href="">Home</a></li>
@@ -359,6 +360,9 @@
 
    </div>
 
+
+
+
        <div>
          <span><h2>Categorys:</h2></span>
      </div>
@@ -369,6 +373,29 @@
 </ul>
 
 
+<div class="col-4 d-flex justify-content-end align-items-center">
+      @include('partials.search')
+
+     <div>
+        @if (request()->input('q'))
+             <h3>{{ $products->total() }} résultat(s) pour la recherche "{{ request()->q }}"</h3>
+        @endif
+     </div>
+
+
+        <div>
+            @if (count($errors) > 0)
+            <div class="alert alert-danger">
+              <ul class="mb-0 mt-0">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
+        </div>
+
+  </div>
 
 
 
@@ -438,24 +465,30 @@
 
 
 
-@if (session('danger'))
+@if (session('error'))
 
 <div class="alert alert-danger">
-    {{ session('danger') }}
+    {{ session('error') }}
 </div>
 
 
 @endif
 
+
+
+
+
+
+
  <div class="offer">
      <div class="small-container">
         <div class="row">
           <div class="col-2">
-              <img src="img/III.png"class="offer-img">
+              <img src="img/ecco.png"class="offer-img">
           </div>
               <div class="col-2">
                <p>Exclusively Available on Belshooop</p>
-                <h1>Smart Bnad 2021</h1>
+                <h1>BELSHOOOP STORE</h1>
                <small>The mi smart bad E18 features a 30.9% larger</small>
                <a href=""class="btn">Buy Now &#8594;</a>
               </div>
@@ -513,19 +546,17 @@
      <div class="small-container">
         <div class="row">
         <div class="col-5">
-            <img src="img/logo-godrej.png">
+            <img src="img/ecco.png">
         </div>
         <div class="col-5">
-            <img src="img/logo-coca-cola.png">
+            <img src="img/visa.png">
         </div>
         <div class="col-5">
-            <img src="img/logo-oppo.png">
+            <img src="img/shop img.png">
         </div>
         <div class="col-5">
-            <img src="img/logo-paypal.png">
-        </div>
-        <div class="col-5">
-            <img src="img/logo-philips.png">
+            <img src="img/story.png">
+
         </div>
         </div>
      </div>

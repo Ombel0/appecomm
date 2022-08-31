@@ -1,5 +1,5 @@
 @extends('layouts.master')
-<base href="/img" >
+{{--  <base href="/img" >--}}
 
 @section('extra-meta')
 <meta name="csrf-token" content="{{ csrf_token() }}">
