@@ -10,10 +10,10 @@
 @if (Cart::count() > 0)
 <style>
 body {
-    background: #eecd;
+    background: Aqua;
     background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
-    background: linear-gradient(to right, #eecda3, #ef629f);
-    min-height: 100vh;
+    background: linear-gradient(to right, #eecda3, aqua);
+    min-height: 90vh;
   }
 
   .p-2
@@ -24,19 +24,13 @@ body {
         margin-bottom:50px;
 
   }
-  .p-3
-  {
-    flex-basis:50%;
-        padding:15px;
-        min-width:200px;
-        margin-bottom:50px;
-        transition: transform 0.5s;
-  }
+
 
 
 
   .p-1
   {
+    color:chocolate;
     font-weight: 900;
     width:100%;
     background-color:#eecd;
@@ -59,7 +53,40 @@ body {
   }
 
 
+  table {
+    border-collapse:separate;
+    border:solid ivory;
+    border-radius:6px;
+}
 
+td, th {
+    border-left:solid khaki 2px;
+    border-top:solid khaki 2px;
+    border-right:solid khaki 2px;
+}
+
+th {
+
+    background-color:palevioletred;
+    border-top: none;
+}
+
+td:first-child, th:first-child {
+     border-left: none;
+}
+
+
+.title
+{
+  color: ivory;
+
+}
+
+
+.price
+{
+  color: ivory ;
+}
   </style>
     <div class="pb-5">
 
@@ -90,12 +117,12 @@ body {
 
                   @foreach (Cart::content() as $product )
 
-                  <tr  style=" align : center ; background-color: white ;">
+                  <tr  style=" align : center ; background-color: palevioletred ; ">
                     <th scope="row" class="border-0">
                       <div class="p-2">
                         <img src="{{ asset('storage/'.$product->model->image) }} " alt="" width="300" class="img-fluid rounded shadow-sm">
                         <div class="p-3">
-                          <h3 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ $product->model->title }}</a></h3><span class="text-muted font-weight-normal font-italic d-block"></span>
+                          <h3 class="mb-0"> <a href="#" class="title">{{ $product->model->title }}</a></h3><span class="text-muted font-weight-normal font-italic d-block"></span>
                         </div>
                       </div>
                     </th>
@@ -105,7 +132,7 @@ define the id of the products that are in the carts  -->
 
                        <td>
                         <div class="p-9">
-                         {{ getPrice($product->subtotal()) }}
+                          <div class="price"> {{ getPrice($product->subtotal()) }} </div>
                         </div>
                       </td>
 
