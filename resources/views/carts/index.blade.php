@@ -8,12 +8,59 @@
 @section('content')
 
 @if (Cart::count() > 0)
-<style>body {
+<style>
+body {
     background: #eecd;
     background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
     background: linear-gradient(to right, #eecda3, #ef629f);
     min-height: 100vh;
-  } </style>
+  }
+
+  .p-2
+  {
+    flex-basis:50%;
+        padding:15px;
+        min-width:400px;
+        margin-bottom:50px;
+
+  }
+  .p-3
+  {
+    flex-basis:50%;
+        padding:15px;
+        min-width:200px;
+        margin-bottom:50px;
+        transition: transform 0.5s;
+  }
+
+
+
+  .p-1
+  {
+    font-weight: 900;
+    width:100%;
+    background-color:#eecd;
+    padding: 40px;
+  }
+
+
+
+  .p-9
+  {
+    font-weight: 900;
+    width: 100px ;
+
+    color:black;
+
+    margin-right: 50px;
+    margin-left: 70px;
+
+
+  }
+
+
+
+  </style>
     <div class="pb-5">
 
       <div class="container">
@@ -26,16 +73,16 @@
                 <thead>
                   <tr>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="p-2 px-3 text-uppercase">Product</div>
+                     <div class="p-1"> Product</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Price</div>
+                      <div class="p-1">Price</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Quantity</div>
+                      <div class="p-1">Quantity</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Remove</div>
+                      <div class="p-1">Remove</div>
                     </th>
                   </tr>
                 </thead>
@@ -43,22 +90,27 @@
 
                   @foreach (Cart::content() as $product )
 
-                  <tr>
+                  <tr  style=" align : center ; background-color: white ;">
                     <th scope="row" class="border-0">
                       <div class="p-2">
-
-
-                        <img src="{{ asset('storage/'.$product->model->image) }} " alt="" width="100" class="img-fluid rounded shadow-sm">
-                        <div class="ml-3 d-inline-block align-middle">
-                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ $product->model->title }}</a></h5><span class="text-muted font-weight-normal font-italic d-block"></span>
+                        <img src="{{ asset('storage/'.$product->model->image) }} " alt="" width="300" class="img-fluid rounded shadow-sm">
+                        <div class="p-3">
+                          <h3 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ $product->model->title }}</a></h3><span class="text-muted font-weight-normal font-italic d-block"></span>
                         </div>
                       </div>
                     </th>
                     <!--add to quantity -->
                       <!--rowId
 define the id of the products that are in the carts  -->
-                    <td class="border-0 align-middle"><strong>{{ getPrice($product->subtotal()) }}</strong></td>
-                    <td class="border-0 align-middle">
+
+                       <td>
+                        <div class="p-9">
+                         {{ getPrice($product->subtotal()) }}
+                        </div>
+                      </td>
+
+                    <td>
+                      <div class="p-9">
                         <select class="custom-select" name="qty" id="qty" data-id="{{ $product->rowId }}">
                             @for ($i = 1; $i <= 6; $i++)
 
@@ -67,18 +119,20 @@ define the id of the products that are in the carts  -->
                                 </option>
                             @endfor
                         </select>
+                      </div>
                     </td>
-                    <td class="border-0 align-middle">
 
+
+                    <td>
            <!--form destroy-->
-
+                     <div class="p-9">
                         <form action="{{ route('carts.destroy', $product->rowId) }}" method="POST">
 
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </form>
-
+                    </div>
                     </td>
                   </tr>
                   @endforeach

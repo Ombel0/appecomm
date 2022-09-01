@@ -548,16 +548,11 @@
         <div class="col-5">
             <img src="img/ecco.png">
         </div>
-        <div class="col-5">
-            <img src="img/visa.png">
-        </div>
+
         <div class="col-5">
             <img src="img/shop img.png">
         </div>
-        <div class="col-5">
-            <img src="img/story.png">
-
-        </div>
+       
         </div>
      </div>
      </div>
