@@ -327,23 +327,28 @@
 
          .category
          {
+
             color: cadetblue;
             margin-right: 50px;
-            margin-left: 500px;
+            margin-left: 50px;
 
          }
          .position
          {  color:crimson;
             margin-right: 5px;
-            margin-left: 450px;
+            margin-left: 20px;
          }
 
          .search
          {
-            
-            margin-left: 900px;
+
+            margin-left: 20px;
 
          }
+
+
+
+
 </style>
 
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,400;1,700&display=swap" rel="stylesheet">
@@ -380,18 +385,19 @@
    </div>
 
 
+               <span><h2 class="position">TAGS</h2></span>
+      <nav>
 
 
-       <div>
-             <span><h2 class="position">Categorys</h2></span>
 
-          <ul>
                @foreach (App\Models\Category::all() as $category)
-                 <strong>  <li> <a class="category" href="{{ route('products.index', ['categorie' => $category->slug]) }}">{{ $category->name }}</a></li> </strong>
+                <ul>
+                  <strong><li><a class="category" href="{{ route('products.index', ['categorie' => $category->slug]) }}">{{ $category->name }}</a></li></strong>
+                </ul>
               @endforeach
-         </ul>
 
-       </div>
+      </nav>
+
 
       <div class="search">
         @include('partials.search')
